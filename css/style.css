@@ -863,4 +863,7 @@ select {
     font-weight: 200;
     padding-left: 20px; }
 
+.ba-hidden {
+  display: none; }
+
 /*# sourceMappingURL=style.css.map */
