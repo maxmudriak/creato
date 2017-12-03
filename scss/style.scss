@@ -1,5 +1,6 @@
 @import "layout.scss";
 @import "normalize.scss";
+
 @import url('https://fonts.googleapis.com/css?family=Raleway:200,300,300i,500,600,700,800');
 
 $body-font: 'Raleway', sans-serif;
@@ -8,7 +9,10 @@ $secondary-font-color: #fcfcfc;
 $hover-color: #ef4836;
 $strange-title: rgba(255, 255, 255, 0.0117647);
 
-
+$bp-small: 480px;
+$bp-medium: 768px;
+$bp-large: 960px;
+$bp-xlarge: 1200px;
 
 body{
 	font: 300 16px/1.2 $body-font;
@@ -30,10 +34,11 @@ p {
 .link__more {
 	color:  $primary-font-color;
 	font: 700 18px/1.5 $body-font;
+	letter-spacing: 0.04em;
 	&:hover {
 		color: $hover-color;
 		& svg {
-			fill: $hover-color;
+			fill: currentColor;
 		}
 	}
 }
@@ -45,6 +50,9 @@ p {
 	font-size: 128px;
 	font-weight: 800;
 	text-transform: uppercase;
+	@media (max-width: $bp-medium) {
+		font-size: 60px;
+	}
 }
 /* Typography */
 a,
@@ -59,6 +67,7 @@ input[type="button"],
 button,
 .ba-button{
 	display: inline-block;
+	border: none;
 }
 input[type="submit"]:hover,
 input[type="button"]:hover,
@@ -89,22 +98,45 @@ select:focus {
 textarea {
 
 }
+.ba-hidden {
+	display: none;
+}
 
 .ba-header {
-	padding-top: 75px;
+	padding-top: 67px;
 	&__logo {
 		float: left;
 	}
 	&__nav {
 		float: right;
-		padding-top: 5px;
+		padding-top: 10px;
+		@media (max-width: $bp-large) {
+			padding-top: 0;
+		}
 		&-menu {
 			padding: 0;
 			margin: 0;
+			@media (max-width:$bp-large) {
+				position: fixed;
+				opacity: 0;
+				top: 0;
+				left: 0;
+				top: 0;
+				bottom: 0;
+				width: 160px;
+				background: #363636;
+				z-index: -1;
+				transition: opacity .5s ease-out;
+				padding-top: 30px;
+			}
 			& li {
 				display: inline-block;
 				list-style: none;
 				padding-left: 40px;
+				letter-spacing: 0.08em;
+				@media (max-width:$bp-large) {
+					padding: 12px 30px;
+				}
 			}
 			& a {
 				color:  #ffffff;
@@ -118,12 +150,53 @@ textarea {
 		}
 	}
 }
+.ba-menu-toggle {
+	padding: 0;
+	line-height: 1;
+	background: none;
+	display: none;
+	& svg {
+		display: block;
+	}
+	@media (max-width: $bp-large) {
+		display: inline-block;
+	}
+}
+.ba-overlay {
+	position: fixed;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	background: #ccc;
+	opacity: 0;
+	z-index: -1;
+	.ba-menu-open & {
+		opacity: 0.5;
+		z-index: 1;
+		transition: opacity .1s ease-out;
+	}
+}
+.ba-menu-open .ba-header__nav-menu{
+	opacity: 0.8;
+	z-index: 10;
+}
 .ba-intro {
 	background:  linear-gradient(to bottom, rgba(27, 40, 57, 0.74) 0%,rgba(5, 13, 22, 0.86) 40%,#020407 69%,rgba(2, 4, 7, 1) 100%),
 	url(../img/bg-intro.jpg) no-repeat 50% 0;
 	background-size: cover;
 	&-body {
-		padding-top: 230px;
+		padding-top: 216px;
+		@media (max-width: $bp-medium)  {
+			margin-left: 0;
+		}
+		.ba-intro-body__section {
+			padding: 0;
+			@media (max-width: $bp-medium)  {
+				width: 100%;
+				text-align: center;
+			}
+		}
 		&__img {
 			position: relative;
 			max-width: 470px;
@@ -142,59 +215,116 @@ textarea {
 				width: 90px;
 				height: 90px;
 			}
+			&:before {
+				content: "";
+				background-color: #ccc;
+				position: absolute;
+				top: -4px;
+				right: -55px;
+				width: 90px;
+				height: 1px;
+				margin-top: 25px;
+				margin-left: -160px;
+				z-index: 3;
+				@media (max-width: $bp-medium)  {
+					display: none;
+				}
+			}
 		}
 		&__title {
 			font-size: 48px;
 			font-weight: 300;
 			text-transform: uppercase;
 			letter-spacing: 0.04em;
-			&:before {
-				content: "";
-				background-color: #ccc;
-				position: absolute;
-				width: 90px;
-				height: 1px;
-				margin-top: 25px;
-				margin-left: -160px;
-				z-index: 3;
-			}
 		}
 		&__info {
 			color:  $secondary-font-color;
 			font-weight: 200;
-			padding: 45px 0 45px;
-			width: 80%;
+			padding: 29px 0 32px;
+			width: 85%;
+			line-height: 1.9;
+			letter-spacing: 0.08em;
+			@media (max-width: $bp-medium)  {
+				margin: 0 auto;
+			}
 		}
 		&__more {
 			display: inline-block;
 		}
 	}
 }
+@media (max-width: $bp-medium)  {
+	.ba-intro-body__img {
+		margin: 0 auto;
+	}
+	.ba-intro-body .ba-intro-body__col {
+		width: 100%;
+		padding: 0 20px 40px 20px;
+	}
+}
 .ba-about {
 	padding-top: 40px;
 	position: relative;
+	@media (max-width: $bp-large) {
+		padding-top: 80px;
+	}
 	&__title {
 		position: absolute;
 		left: 0;
-		top: 12%;
+		top: 15%;
+		@media (max-width:$bp-large) {
+			top: 1%;
+		}
 	}
-	& img {
-		position: absolute;
-		right: 6%;
-		top: 40px;
+	&__img  {
+		text-align: center;
+		img {
+			position: absolute;
+			right: 7%;
+			top: 45px;
+			@media (max-width: $bp-large) {
+				position: static;
+		}
+	}
 	}
 	&-body {
 		background: url(../img/bg-about.png) no-repeat fixed 50%;
 		background-size: cover;
 		margin-top: 160px;
+		@media (max-width: $bp-large) {
+			margin-top: 20px;
+		}
 		&__section {
 			background: rgba(31, 98, 186, 0.9);
-			padding: 150px 0 130px 60px;
+			padding: 144px 0 146px 66px;
+			@media (max-width: $bp-medium) {
+				padding-right: 40px;
+			}
 		}
 		&__text {
 			width: 45%;
-			line-height: 1.5;
-			padding-bottom: 45px;
+			line-height: 1.9;
+			padding-bottom: 32px;
+			position: relative;
+			&:before {
+				content: "";
+				background-color: #ccc;
+				position: absolute;
+				top: -7%;
+				left: 19%;
+				width: 37px;
+				height: 1px;
+				margin-top: 25px;
+				margin-left: -160px;
+				z-index: 3;
+				@media (max-width: $bp-large) {
+					top: -10px;
+					left: 100px;
+				}
+			}
+			@media (max-width: $bp-medium) {
+				width: 100%;
+			}
 		}
 	}
 }
@@ -209,44 +339,72 @@ textarea {
 	&__subtitle {
 		font-size: 24px;
 		font-weight: 300;
-		padding-bottom: 40px;
+		padding-bottom: 26px;
 		display: inline-block;
+		letter-spacing: 0.06em;
+		padding-left: 23px;
 		&:first-child {
 			background: url(../img/aim.png) no-repeat;
-			padding-left: 45px;
+			padding-left: 57px;
 		}
 	}
 	&__text {
 		font-size: 14px;
 		font-weight: 200;
-		padding-bottom: 40px;
+		padding-bottom: 26px;
 		width: 80%;
+		line-height: 1.8;
+		@media (max-width: $bp-small) {
+			width: 100%;
+		}
+	}
+}
+@media (max-width: $bp-medium) {
+	.ba-services .ba-width-1-3 {
+		width: 50%;
+		padding-bottom: 40px;
+	}
+}
+@media (max-width: $bp-small) {
+	.ba-services .ba-width-1-3 {
+		width: 100%;
+		text-align: center;
 	}
 }
 .ba-galery {
-	padding-top: 170px;
+	padding-top: 168px;
 	position: relative;
+	@media (max-width: $bp-medium) {
+		padding-top: 40px;
+	}
 	&__title {
 		position: absolute;
 		top: 10%;
 		left: 10%;
 	}
 	&__work-filter {
-		padding-bottom: 30px;
+		padding-bottom: 25px;
 		float: right;
 		button {
 			background: none;
 			border: 1px solid transparent;
 			border-radius: 5px;
 			display: inline-block;
-			margin-left: 30px;
+			margin-left: 25px;
 			color:  #595959;
 			font-size: 14px;
 			font-weight: 500;
+			&:hover {
+				color: #FFF;
+			}
 			&:focus {
 				outline: none;
 				border: 1px solid $secondary-font-color;
 				border-radius: 5px;
+			}
+			@media (max-width: $bp-small) {
+				font-size: 16px;
+				margin-bottom: 10px;
 			}
 		}
 		.ba-active {
@@ -255,11 +413,23 @@ textarea {
 	}
 	.ba-grid + .ba-grid {
 		margin-top: 8px;
+		@media (max-width: $bp-medium) {
+			margin-top: 1px;
+		}
 	}
 	.ba-grid {
 		margin-left: -10px;
+		@media (max-width: $bp-medium) {
+			margin-left: -1px;
+		}
 		[class*="ba-width-"] {
 			padding-left: 10px;
+			@media (max-width: $bp-medium) {
+				padding-left: 4px;
+			}
+			@media (max-width: $bp-small) {
+				padding-left: 0;
+			}
 			img {
 				width: 100%;
 			}
@@ -278,27 +448,57 @@ textarea {
 		}
 	}
 }
+//media for galery
+@media (max-width: $bp-small) {
+	.ba-galery .ba-grid [class^="ba-width"] {
+		float: none;
+		width: 100%;
+	}
+}
+//end
 .ba-speech {
-	padding-top: 250px;
+	padding-top: 311px;
 	position: relative;
+	@media (max-width: $bp-medium) {
+		padding-top: 50px;
+	}
+	@media (max-width: $bp-large) and (min-width: $bp-medium) {
+		padding-top: 150px;
+	}
 	&__title {
 		position: absolute;
-		top: 18%;
+		top: 26%;
 		right: 0;
 	}
-	img {
-		position: absolute;
-		top: 30%;
-		left: 6%;
+	&__img {
+		text-align: center;
+		& img {
+			position: absolute;
+			top: 34%;
+			left: 7%;
+			@media (max-width: $bp-large) {
+				position: static;
+				margin-bottom: 30px;
+		}
+	}
 	}
 	&-body {
 		background: #EF4836;
 		padding: 140px 80px 65px 0;
+		@media (max-width: $bp-medium) {
+			padding: 100px 20px 20px;
+		}
+		@media (max-width: $bp-small) {
+			padding: 50px 25px 20px;
+		}
 		&__container {
 			float: right;
-			width: 46%;
+			max-width: 44.5%;
 			position: relative;
 			z-index: 1;
+			@media (max-width: $bp-medium) {
+				max-width: 100%;
+			}
 		}
 		&__text {
 			line-height: 1.9;
@@ -313,15 +513,19 @@ textarea {
 				left: -20px;
 				z-index: -1;
 				font-style: normal;
+				@media (max-width: $bp-small) {
+					top: -100px;
+					left: -20px;
+				}
 			}
 		}
 		&__author {
 			font-weight: 700;
-			padding-top: 35px;
+			padding-top: 24px;
 		}
 		&__arrows {
 			float: right;
-			padding-top: 55px;
+			padding-top: 45px;
 			button {
 				background: none;
 				border: 1px solid transparent;
@@ -344,53 +548,63 @@ textarea {
 }
 .ba-logos {
 	padding-top: 150px;
+	@media (max-width: $bp-medium) {
+		padding-top: 75px;
+	}
+	@media (max-width: $bp-small) {
+		padding-top: 30px;
+	}
 	.ba-width-1-6 {
 		padding-left: 50px;
-
+		@media (max-width: $bp-medium) {
+			padding-left: 20px;
+		}
+		@media (max-width: $bp-small) {
+			padding-left: 20px;
+			width: 33%;
+		}
 	}
 	img {
-		opacity: (0.5);
+		opacity: (0.3);
 	}
 }
 .ba-contact {
 	padding-top: 100px;
-	.ba-contact-bg {
+	&-bg {
 		background: url(../img/get-in-touch-content.png) no-repeat;
 		background-size: cover;
-		.ba-contact-info {
-			background: rgba(31, 98, 186, 0.9);
-			padding: 40px 0 76px 80px;
-			&__subtitle {
-				font-size: 20px;
-				font-weight: 700;
-				padding-bottom: 15px;
-				padding-top: 35px;
-			}
-			&__text-info {
-				color:  #ffffff;
-				font-size: 14px;
-				display: block;
-			}
-		}
 	}
 	&__title {
 		font-size: 30px;
 		font-weight: 300;
+		letter-spacing: 0.06em;
 	}
 	.ba-width-1-3 {
 		width: 41.5%;
+		@media (max-width: $bp-medium) {
+			width: 100%;
+			padding-left: 0;
+		}
+	}
+	&__form-block {
+		background: #131313;
+		padding: 50px 0 0 60px;
 	}
 	.ba-width-2-3 {
-		background: #131313;
 		width: 58%;
-		padding-left: 60px;
-		padding-top: 41px;
+		@media (max-width: $bp-medium) {
+			width: 100%;
+		}
 	}
 	&-form {
-		width: 50%;
-		padding-top: 10px;
+		max-width: 50%;
+		padding-top: 13px;
+		@media (max-width: $bp-medium) {
+			max-width: 100%;
+			padding-right: 20px;
+		}
 		input {
-			height: 50px;
+			height: 47px;
 		}
 		&__element {
 			background: none;
@@ -400,8 +614,8 @@ textarea {
 			border: none;
 			border-bottom: 1px solid #525252;
 			margin-bottom: 10px;
-			padding-left: 15px;
-			resize: none;
+			padding-left: 10px;
+			border-radius: 0;
 			&::-webkit-input-placeholder {
 				color:  #525252;
 				&:focus {
@@ -414,6 +628,13 @@ textarea {
 				border-color: #2866bd;
 			}
 		}
+		&__textarea {
+			line-height: 1.1;
+			height: 110px;
+			padding-top: 20px;
+			margin-bottom: 5px;
+			resize: none;
+		}
 		&__button {
 			background: none;
 			border: 1px solid transparent;
@@ -422,13 +643,57 @@ textarea {
 			color:  #ef4836;
 			font-size: 18px;
 			font-weight: 700;
-			margin: 10px 0 60px;
+			margin: 19px 0 50px;
+			letter-spacing: 0.04em;
 			&:focus {
 				outline: none;
 				border: 1px solid $secondary-font-color;
 				border-radius: 5px;
 			}
+			&:hover {
+				color: $secondary-font-color;
+				& svg {
+					fill: currentColor;
+				}
+			}
 		}
+	}
+}
+.ba-contact-info {
+	background: rgba(31, 98, 186, 0.9);
+	padding: 40px 0 58px 80px;
+	position: relative;
+	&:before {
+		content: "";
+		background-color: #ccc;
+		position: absolute;
+		top: 10%;
+		right: -5%;
+		width: 90px;
+		height: 1px;
+		margin-top: 25px;
+		margin-left: -160px;
+		z-index: 3;
+		@media (max-width: $bp-medium)  {
+			display: none;
+		}
+	}
+	&__text-info + &__text-info {
+		margin-top: 10px;
+	}
+	&__subtitle {
+		font-size: 20px;
+		font-weight: 700;
+		padding-bottom: 15px;
+		padding-top: 37px;
+	}
+	&__text-info {
+		color:  #ffffff;
+		font-size: 14px;
+		display: block;
+	}
+	& a:hover {
+		color: $hover-color;
 	}
 }
 .ba-footer {
@@ -440,10 +705,13 @@ textarea {
 	}
 	&__social {
 		float: right;
+		margin: 0;
+		padding: 12px 0;
 		li {
 			display: inline-block;
 			list-style: none;
 			padding-bottom: 10px;
+			margin-left: 18px;
 			&:hover {
 				border-bottom: 5px solid #fff;
 			}
